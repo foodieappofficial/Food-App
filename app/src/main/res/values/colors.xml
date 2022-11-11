@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="main">#aa86f7</color>
+    <color name="section_green">#6effba</color>
+    <color name="section_yellow">#ffc880</color>
+    <color name="section_red">#f36d6c</color>
+
+    <color name="highlight_color">#0e0e0e</color>
+    <color name="searchbar_background">#e1ddfe</color>
+
+
 </resources>
