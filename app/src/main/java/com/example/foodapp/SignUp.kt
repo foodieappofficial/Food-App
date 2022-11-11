@@ -17,6 +17,7 @@ class SignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         firebaseAuth = FirebaseAuth.getInstance()
         binding.button.setOnClickListener{
             val email = binding.email.text.toString()

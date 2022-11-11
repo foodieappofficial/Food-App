@@ -15,13 +15,27 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         firebaseAuth = FirebaseAuth.getInstance()
         binding.button.setOnClickListener {
-            val email = binding.email.text.toString();
+            val email = binding.email.text.toString()
             val password = binding.password.text.toString()
-            if (email.isEmpty() && password.isNotEmpty()){
-                
+            if (email.isNotEmpty() && password.isNotEmpty()){
+                firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener{
+                    if (it.isSuccessful){
+                        val intent = Intent(this,MainActivity2::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
+            else{
+                Toast.makeText(this,"Empty fields are not allowed!",Toast.LENGTH_SHORT).show()
+            }
+
+
         }
         binding.SignUp.setOnClickListener{
             val intent = Intent(this,SignUp::class.java)
@@ -30,5 +44,14 @@ class Login : AppCompatActivity() {
 
         }
 
+    }
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = firebaseAuth.currentUser
+        if(currentUser != null){
+            val intent = Intent(this,MainActivity2::class.java)
+            startActivity(intent)
+        }
     }
 }
