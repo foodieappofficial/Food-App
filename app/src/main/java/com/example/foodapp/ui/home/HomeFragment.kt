@@ -13,6 +13,8 @@ import com.example.foodapp.CategoryAdapter
 import com.example.foodapp.Model
 import com.example.foodapp.R
 import com.example.foodapp.databinding.FragmentHomeBinding
+import com.recyclerviewapp.RecomItemAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -41,6 +43,7 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
 
         }
+
 
         return root
     }
@@ -71,6 +74,19 @@ class HomeFragment : Fragment() {
         foodList = arrayListOf<Model>()
         getUserdata()
 
+
+
+        // set the layout manager for recommendation recycler
+        recom_recycler_view_items.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false )
+
+        // adapter class initialized and list passed in it
+        val itemAdapter = RecomItemAdapter(requireContext(), getItemsList())
+
+        recom_recycler_view_items.adapter = itemAdapter
+
+
+
+
     }
 
     private fun getUserdata() {
@@ -80,6 +96,21 @@ class HomeFragment : Fragment() {
        }
         binding.recyclerView.adapter = CategoryAdapter(foodList)
     }
+
+
+    // setting list for recomm recycler
+    private fun getItemsList(): ArrayList<String>{
+
+        val list = ArrayList<String>()
+
+        for (i in 1..15 ){
+            list.add("item $i")
+        }
+
+        return list
+
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
