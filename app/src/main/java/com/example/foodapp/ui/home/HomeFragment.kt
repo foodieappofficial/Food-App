@@ -7,9 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.foodapp.CategoryAdapter
+import com.example.foodapp.Model
+import com.example.foodapp.R
 import com.example.foodapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var foodList :ArrayList<Model>
+    lateinit var imageId : Array<Int>
+    lateinit var titleId : Array<String>
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -28,15 +37,53 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
+
         homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
         }
+
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        imageId = arrayOf(
+            R.drawable.coffe,
+            R.drawable.coffe,
+            R.drawable.coffe,
+            R.drawable.coffe,
+            R.drawable.coffe,
+            R.drawable.coffe,
+            R.drawable.coffe
+
+            )
+        titleId = arrayOf(
+            "Caffe",
+            "Caffe",
+            "Caffe",
+            "Caffe",
+            "Caffe",
+            "Caffe",
+            "Caffe"
+        )
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        binding.recyclerView.setHasFixedSize(true)
+        foodList = arrayListOf<Model>()
+        getUserdata()
+
+    }
+
+    private fun getUserdata() {
+       for (i in imageId.indices){
+           val food = Model(imageId[i],titleId[i])
+           foodList.add(food)
+       }
+        binding.recyclerView.adapter = CategoryAdapter(foodList)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

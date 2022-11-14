@@ -1,11 +1,13 @@
 package com.example.foodapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -28,6 +30,7 @@ class MainActivity2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAuth = FirebaseAuth.getInstance()
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -92,8 +95,11 @@ class MainActivity2 : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout -> {
-              firebaseAuth.signOut()
-                true
+                firebaseAuth.signOut()
+                val intent = Intent(this,Login::class.java)
+                startActivity(intent)
+                Toast.makeText(this,"Clicked",Toast.LENGTH_SHORT).show()
+                return true
             }
 
             else -> super.onOptionsItemSelected(item)
